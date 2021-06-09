@@ -7,16 +7,17 @@ import java.awt.event.KeyListener;
 
 import javax.swing.Timer;
 
+
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.glu.GLU;
 
-class Renderer implements GLEventListener, KeyListener, ActionListener {
-	// private GLU glu = new GLU();
-	Byte R;
-	Byte G;
-	Byte B;
+ class Renderer implements GLEventListener, KeyListener, ActionListener {
+	private GLU glu = new GLU();
+	
+
 	private GLCanvas display;
 	private Timer animationTimer;
 
@@ -28,65 +29,36 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		startAnimation();
 	}
 	
-	
 	public void display(GLAutoDrawable gLDrawable) {
 		final GL2 gl = gLDrawable.getGL().getGL2();
 
-		// Limpa a tela coma cor de fundo
-		gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
-
-		gl.glMatrixMode(GL2.GL_MODELVIEW0_ARB);
+		//vertex parameters is x,y,z of display, respectively.
+		
+		// Clear the window if a background color
+		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
+		//gl.glMatrixMode(GL2.GL_MODELVIEW0_ARB);
+		//gl.glLoadIdentity();
+		
+		// Move Left 1.5 Units And Into The Screen 6.0
+		gl.glTranslatef(-1.5f,0.0f,-6.0f);
 
-		//Triangle
-		gl.glBegin(GL2.GL_TRIANGLES);
-		
-		gl.glColor3f(1.0f, 0.0f, 0.0f);
-		gl.glVertex2f(1.0f, 1.0f);
-		
-		gl.glColor3f(0.0f, 1.0f, 0.0f);
-		gl.glVertex2f(3.0f, 1.0f);
-		
-		gl.glColor3f(0.0f, 0.0f, 1.0f);
-		gl.glVertex2f(2.0f, 3.0f);
-		
-		gl.glEnd();
+		gl.glBegin(GL2.GL_TRIANGLES);       // Drawing Using Triangl.gles
+		gl.glVertex3f( 0.0f, 1.0f, 0.0f);   // Top
+		gl.glVertex3f(-1.0f,-1.0f, 0.0f);   // Bottom Left
+		gl.glVertex3f( 1.0f,-1.0f, 0.0f);   // Bottom Right
+		gl.glEnd();                         // Finished Drawing The Triangl.gle
+
+		//Move Right 3 Units
+		gl.glTranslatef(3.0f,0.0f,0.0f);
 
 		//Quad
-		gl.glBegin(GL2.GL_QUADS);
-		
-		gl.glColor3f(100.0f, 0.0f, 0.0f);
-		gl.glVertex2i(9, 6);
-		
-		gl.glColor3f(0.0f, 167.0f, 0.0f);
-		gl.glVertex2i(6, 6);
-		
-		gl.glColor3f(0.0f, 0.0f, 133.0f);
-		gl.glVertex2i(6, 3);
-
-		gl.glColor3f(168.0f, 122.0f, 0.0f);
-		gl.glVertex2i(9, 3);
-		
-		gl.glEnd();
-
-
-		//vertex parameters is x,y,z of display, respectively.
-		// gl.glLineWidth(3);
-		// gl.glColor3f(1, 0, 0);
-
-		// gl.glBegin(GL2.GL_LINES);
-		// gl.glVertex2f(0, 0);
-		// gl.glVertex2f(5, 5);
-		// gl.glEnd();
-
-		// gl.glLineWidth(3);
-		// gl.glColor3f(0, 1, 0);
-		// gl.glBegin(GL2.GL_LINES);
-		// gl.glVertex2f(5, 5);
-		// gl.glVertex2f(10, 0);
-		// gl.glEnd();
-		
-		
+		gl.glBegin(GL2.GL_QUADS);             // Draw A Quad
+		gl.glVertex3f(-1.0f, 1.0f, 0.0f);     // Top Left
+		gl.glVertex3f( 1.0f, 1.0f, 0.0f);     // Top Right
+		gl.glVertex3f( 1.0f,-1.0f, 0.0f);     // Bottom Right
+		gl.glVertex3f(-1.0f,-1.0f, 0.0f);     // Bottom Left
+		gl.glEnd();                           // Done Drawing The Quad
 
 		gl.glFlush();
 	}
@@ -95,7 +67,7 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		System.out.println("init() called");
 
 		GL2 gl = gLDrawable.getGL().getGL2();
-		gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+		gl.glClearColor(0.5f, 0.3f, 0.5f, 0.9f);
 		
 		FPSCounter.StartCounter();
 	}
@@ -103,17 +75,26 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	public void reshape(GLAutoDrawable gLDrawable, int x, int y, int width, int height) {
 		System.out.println("reshape() called: x = " + x + ", y = " + y + ", width = " + width + ", height = " + height);
 		final GL2 gl = gLDrawable.getGL().getGL2();
+		
+		if(height <= 0) {
+			height = 1;
+		}
+		final float h = (float) width / height;
+		
+		// Define the area to be occupied by the openGl inside the window
+		gl.glViewport(0, 0, width, height);
 
 		// Reset the coordinate system before modifying
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		// Define a area a ser ocupada pela área OpenGL dentro da Janela
-		gl.glViewport(0, 0, width, height);
-		gl.glOrthof(0, 10, 0, 10, 0, 1);
-
-		// Define os limites lógicos da área OpenGL dentro da Janela
+		
+		glu.gluPerspective(45_0f, h, 1.0, 20.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
+		//gl.glOrthof(0, 10, 0, 10, 0, 1);
+
+		
+		
 	}
 
 	public void dispose(GLAutoDrawable arg0) {
