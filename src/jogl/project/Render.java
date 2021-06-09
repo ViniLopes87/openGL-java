@@ -44,8 +44,11 @@ import com.jogamp.opengl.glu.GLU;
 		gl.glTranslatef(-1.5f,0.0f,-6.0f);
 
 		gl.glBegin(GL2.GL_TRIANGLES);       // Drawing Using Triangl.gles
+		gl.glColor3f(0.8f, 0.2f, 0.1f);     // First Color
 		gl.glVertex3f( 0.0f, 1.0f, 0.0f);   // Top
+		gl.glColor3f(0.1f, 1.0f, 0.4f);		// Second Color
 		gl.glVertex3f(-1.0f,-1.0f, 0.0f);   // Bottom Left
+		gl.glColor3f(0.1f, 0.3f, 0.8f);		// Third Color
 		gl.glVertex3f( 1.0f,-1.0f, 0.0f);   // Bottom Right
 		gl.glEnd();                         // Finished Drawing The Triangl.gle
 
@@ -53,6 +56,7 @@ import com.jogamp.opengl.glu.GLU;
 		gl.glTranslatef(3.0f,0.0f,0.0f);
 
 		//Quad
+		gl.glColor3f(0.5f, 0.5f, 1.0f);       // Blue Color of quad.
 		gl.glBegin(GL2.GL_QUADS);             // Draw A Quad
 		gl.glVertex3f(-1.0f, 1.0f, 0.0f);     // Top Left
 		gl.glVertex3f( 1.0f, 1.0f, 0.0f);     // Top Right
