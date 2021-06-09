@@ -51,7 +51,26 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glVertex2f(2.0f, 3.0f);
 		
 		gl.glEnd();
+
+		//Quad
+		gl.glBegin(GL2.GL_QUADS);
 		
+		gl.glColor3f(100.0f, 0.0f, 0.0f);
+		gl.glVertex2i(9, 6);
+		
+		gl.glColor3f(0.0f, 167.0f, 0.0f);
+		gl.glVertex2i(6, 6);
+		
+		gl.glColor3f(0.0f, 0.0f, 133.0f);
+		gl.glVertex2i(6, 3);
+
+		gl.glColor3f(168.0f, 122.0f, 0.0f);
+		gl.glVertex2i(9, 3);
+		
+		gl.glEnd();
+
+
+		//vertex parameters is x,y,z of display, respectively.
 		// gl.glLineWidth(3);
 		// gl.glColor3f(1, 0, 0);
 
