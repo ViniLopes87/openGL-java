@@ -1,4 +1,4 @@
-package jogl.example;
+package jogl.project;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -11,8 +11,8 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 
-public class ProgramaBasicoOpenGL 
-{
+public class Main 
+{   
     public static void main(String[] args) 
     {
     	// Configura OpenGL Versao 2

@@ -1,4 +1,4 @@
-package jogl.example;
+package jogl.project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +14,9 @@ import com.jogamp.opengl.awt.GLCanvas;
 
 class Renderer implements GLEventListener, KeyListener, ActionListener {
 	// private GLU glu = new GLU();
-
+	Byte R;
+	Byte G;
+	Byte B;
 	private GLCanvas display;
 	private Timer animationTimer;
 
@@ -36,24 +38,36 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glMatrixMode(GL2.GL_MODELVIEW0_ARB);
 		gl.glLoadIdentity();
 
-		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		// Coloque aqui as chamadas das rotinas que desenha os objetos
-		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-		gl.glLineWidth(3);
-		gl.glColor3f(1, 0, 0);
-
-		gl.glBegin(GL2.GL_LINES);
-		gl.glVertex2f(0, 0);
-		gl.glVertex2f(5, 5);
+		//Triangle
+		gl.glBegin(GL2.GL_TRIANGLES);
+		
+		gl.glColor3f(1.0f, 0.0f, 0.0f);
+		gl.glVertex2f(1.0f, 1.0f);
+		
+		gl.glColor3f(0.0f, 1.0f, 0.0f);
+		gl.glVertex2f(3.0f, 1.0f);
+		
+		gl.glColor3f(0.0f, 0.0f, 1.0f);
+		gl.glVertex2f(2.0f, 3.0f);
+		
 		gl.glEnd();
+		
+		// gl.glLineWidth(3);
+		// gl.glColor3f(1, 0, 0);
 
-		gl.glLineWidth(3);
-		gl.glColor3f(0, 1, 0);
-		gl.glBegin(GL2.GL_LINES);
-		gl.glVertex2f(5, 5);
-		gl.glVertex2f(10, 0);
-		gl.glEnd();
+		// gl.glBegin(GL2.GL_LINES);
+		// gl.glVertex2f(0, 0);
+		// gl.glVertex2f(5, 5);
+		// gl.glEnd();
+
+		// gl.glLineWidth(3);
+		// gl.glColor3f(0, 1, 0);
+		// gl.glBegin(GL2.GL_LINES);
+		// gl.glVertex2f(5, 5);
+		// gl.glVertex2f(10, 0);
+		// gl.glEnd();
+		
+		
 
 		gl.glFlush();
 	}

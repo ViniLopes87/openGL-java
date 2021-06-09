@@ -1,4 +1,4 @@
-package jogl.example;
+package jogl.project;
 
 //source: http://www.41post.com/3099/programming/game-programming-basics-creating-a-fps-counter
 final public class FPSCounter  

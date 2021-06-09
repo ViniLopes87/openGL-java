@@ -1,4 +1,4 @@
-package jogl.example;
+package jogl.project;
 
 public class Ponto{
 	public float x,y,z;
