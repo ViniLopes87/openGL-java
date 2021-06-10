@@ -17,10 +17,18 @@ import com.jogamp.opengl.glu.GLU;
  class Renderer implements GLEventListener, KeyListener, ActionListener {
 	private GLU glu = new GLU();
 	
+	//Rotations
+	float rc = 0.0f;
+	float gc = 0.0f;
+	float bc = 0.0f;
+	float rcircle = 0.0f;
+	float rquad = 0.0f;
+	float rtri = 0.0f;
+	int aux1 = 1;
+	int aux2 = 2;
 
 	private GLCanvas display;
 	private Timer animationTimer;
-
 	private boolean animating;
 
 	public Renderer(GLCanvas display) {
@@ -30,7 +38,8 @@ import com.jogamp.opengl.glu.GLU;
 	}
 	
 	public void display(GLAutoDrawable gLDrawable) {
-		final GL2 gl = gLDrawable.getGL().getGL2();
+		final GL2 gl = gLDrawable.getGL().getGL2();	
+		float theta;
 
 		//vertex parameters is x,y,z of display, respectively.
 		
@@ -43,30 +52,77 @@ import com.jogamp.opengl.glu.GLU;
 		// Move Left 1.5 Units And Into The Screen 6.0
 		gl.glTranslatef(-1.5f,0.0f,-6.0f);
 
+		//Triangle
+		gl.glRotatef(rtri, 0.0f, 1.0f, 0.0f);
 		gl.glBegin(GL2.GL_TRIANGLES);       // Drawing Using Triangl.gles
 		gl.glColor3f(0.8f, 0.2f, 0.1f);     // First Color
 		gl.glVertex3f( 0.0f, 1.0f, 0.0f);   // Top
-		gl.glColor3f(0.1f, 1.0f, 0.4f);		// Second Color
+		//gl.glColor3f(0.1f, 1.0f, 0.4f);		// Second Color
 		gl.glVertex3f(-1.0f,-1.0f, 0.0f);   // Bottom Left
-		gl.glColor3f(0.1f, 0.3f, 0.8f);		// Third Color
+		//gl.glColor3f(0.1f, 0.3f, 0.8f);		// Third Color
 		gl.glVertex3f( 1.0f,-1.0f, 0.0f);   // Bottom Right
 		gl.glEnd();                         // Finished Drawing The Triangl.gle
 
+		gl.glLoadIdentity();
+		
 		//Move Right 3 Units
-		gl.glTranslatef(3.0f,0.0f,0.0f);
+		gl.glTranslatef(1.5f,0.0f,-6.0f);
 
 		//Quad
-		gl.glColor3f(0.5f, 0.5f, 1.0f);       // Blue Color of quad.
+		gl.glRotatef(rquad, 0.0f, 1.0f, 0.0f);
+		gl.glColor3f(rc,gc,bc);       // Blue Color of quad.
 		gl.glBegin(GL2.GL_QUADS);             // Draw A Quad
 		gl.glVertex3f(-1.0f, 1.0f, 0.0f);     // Top Left
 		gl.glVertex3f( 1.0f, 1.0f, 0.0f);     // Top Right
 		gl.glVertex3f( 1.0f,-1.0f, 0.0f);     // Bottom Right
 		gl.glVertex3f(-1.0f,-1.0f, 0.0f);     // Bottom Left
 		gl.glEnd();                           // Done Drawing The Quad
+		
+		gl.glLoadIdentity();
+		
+		//retangle
+		gl.glTranslatef(-4.5f,0.0f,-6.0f);
+		gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
+		gl.glColor3f(90/255.0f, 219/255.0f, 209/255.0f); // Blue Color of quad.
+		gl.glBegin(GL2.GL_QUADS);             // Draw A Quad
+		gl.glVertex3f(-2.0f, 1.0f, 0.0f);     // Top Left
+		gl.glVertex3f( 1.0f, 1.0f, 0.0f);     // Top Right
+		gl.glVertex3f( 1.0f,-1.0f, 0.0f);     // Bottom Right
+		gl.glVertex3f(-2.0f,-1.0f, 0.0f);     // Bottom Left
+		gl.glEnd();                           // Done Drawing The Quad
+		
+		gl.glLoadIdentity();
+		
+		//circle
+		int numVertices = 20;
+		double radius = 1.2;
+		gl.glRotatef(rcircle, 0.0f, 1.0f, 0.0f);
+		gl.glColor3f(10/255.0f, 33/255.0f, 247/255.0f);
+		gl.glTranslatef(4.5f,0.0f,-6.0f);
+        gl.glBegin(GL2.GL_POLYGON);
+        {
+            double angle = 0;
+            double angleIncrement = 2 * Math.PI / numVertices;
+            for (int i = 0; i < numVertices; i++) {
+                angle = i * angleIncrement;
+                double x = radius * Math.cos(angle);
+                double y = radius * Math.sin(angle);
+                gl.glVertex2d(x, y);
+            }
+        }
+        gl.glEnd();
+		gl.glLoadIdentity();
 
-		gl.glFlush();
+		if(aux1 == aux2){
+			bc +=2.47/255.0f;
+			gc +=3.3/255.0f;
+			rc += 1.0/255.0f;
+			aux2 +=50;
+		}
+		aux1 +=1;
+		rtri += 0.5f;
+		rquad += 1.0f;
 	}
-
 	public void init(GLAutoDrawable gLDrawable) {
 		System.out.println("init() called");
 
@@ -95,7 +151,7 @@ import com.jogamp.opengl.glu.GLU;
 		glu.gluPerspective(45_0f, h, 1.0, 20.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		//gl.glOrthof(0, 10, 0, 10, 0, 1);
+		//gl.glOrthof(0, 50, 0, 50, 0, 1);
 
 		
 		
