@@ -20,7 +20,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 class Renderer implements GLEventListener, KeyListener, ActionListener {
 	private GLU glu = new GLU();
-	private GLUT glut = new GLUT();
+	//private GLUT glut = new GLUT();
 	private int texture;
 	//Variables
 	float rquad = 0.0f;
@@ -295,21 +295,14 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void Animate() {
 		FPSCounter.StopAndPost();
-		for (int i = 0; i < 1000; i++) {
-			HaInterseccao(new Ponto(i, 10), new Ponto(5, 5 * i), new Ponto(3, 3), new Ponto(4, 67));
-		}
 	}
 
 	public void startAnimation() {
@@ -334,44 +327,5 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Animate();
 		display.repaint();
-	}
-
-	/* ********************************************************************** */
-	/*                                                                        */
-	/* Calcula a interseccao entre 2 retas (no plano "XY" Z = 0) */
-	/*                                                                        */
-	/* k : ponto inicial da reta 1 */
-	/* l : ponto final da reta 1 */
-	/* m : ponto inicial da reta 2 */
-	/* n : ponto final da reta 2 */
-	/*                                                                        */
-	/* s: valor do parâ€°metro no ponto de interseÂ�â€¹o (sobre a reta KL) */
-	/* t: valor do parâ€°metro no ponto de interseÂ�â€¹o (sobre a reta MN) */
-	/*                                                                        */
-	/* ********************************************************************** */
-	public ResultadoInterseccao intersec2d(Ponto k, Ponto l, Ponto m, Ponto n) {
-		double det, s, t;
-
-		det = (n.x - m.x) * (l.y - k.y) - (n.y - m.y) * (l.x - k.x);
-
-		if (det == 0.0)
-			return new ResultadoInterseccao(false, 0, 0);
-
-		s = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
-		t = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
-
-		return new ResultadoInterseccao(true, s, t);
-	}
-
-	public boolean HaInterseccao(Ponto k, Ponto l, Ponto m, Ponto n) {
-		ResultadoInterseccao resultado;
-
-		resultado = intersec2d(k, l, m, n);
-		if (!resultado.resultado)
-			return false;
-		if (resultado.s >= 0.0 && resultado.s <= 1.0 && resultado.t >= 0.0 && resultado.t <= 1.0)
-			return true;
-		else
-			return false;
 	}
 }
