@@ -43,11 +43,8 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	
 	public void display(GLAutoDrawable gLDrawable) {
 		final GL2 gl = gLDrawable.getGL().getGL2();
-		float theta;
      
 		// vertex parameters is x,y,z of display, respectively.
-		//gl.glMatrixMode(GL2.GL_MODELVIEW);
-	    //gl.glLoadIdentity();
 		// Clear the window if a background color
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		
@@ -155,7 +152,7 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	    //rectangle
 	  	gl.glLoadIdentity();
 		gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-	  	gl.glTranslatef(-0.5f + Tx, 0.0f + Ty, -6.0f);
+	  	gl.glTranslatef(-7.5f + Tx, -0.75f + Ty, -6.0f);
 		gl.glBegin(GL2.GL_QUADS); // Draw A Quad
 		gl.glColor3f(1.0f,1.0f,0.0f); // Blue Color of quad.
 		gl.glVertex3f(-2.7f, 2.0f, 0.0f); // Top Left
@@ -167,22 +164,22 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		//Quad
 		gl.glLoadIdentity();
 		gl.glRotatef(rquad, 0.0f, 1.0f, 0.0f);
-		gl.glTranslatef(3.5f + Tx, 2.5f + Ty, -6.0f);
+		gl.glTranslatef(-4.4f + Tx, 0.75f + Ty, -6.0f);
 		gl.glBegin(GL2.GL_QUADS); // Draw A Quad
 		gl.glColor3f(51.0f, 51.0f, 51.0f); // Blue Color of quad.
-		gl.glVertex3f(-1.4f, 0.5f, 0.0f); // Top Left
-		gl.glVertex3f(0.5f, 0.5f, 0.0f); // Top Right
-		gl.glVertex3f(0.5f, -1.0f, 0.0f); // Bottom Right
-		gl.glVertex3f(-1.4f, -1.0f, 0.0f); // Bottom Left
+		gl.glVertex3f(-0.9f, 0.5f, 0.0f); // Top Left
+		gl.glVertex3f(0.4f, 0.5f, 0.0f); // Top Right
+		gl.glVertex3f(0.4f, -0.75f, 0.0f); // Bottom Right
+		gl.glVertex3f(-0.9f, -0.75f, 0.0f); // Bottom Left
 		gl.glEnd(); // Done Drawing The Quad
 		
 		//circle1
 		int numVertices = 20;
-		double radius = 0.95;
+		double radius = 0.65;
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glPushMatrix();
-		gl.glTranslatef(5.0f + Tx, 0.0f + Ty, -6.0f);
+		gl.glTranslatef(-9.3f + Tx, -2.0f + Ty, -6.0f);
 		gl.glRotatef(rcircle, 0.0f, 0.0f, 1.0f);
 		gl.glBegin(GL2.GL_POLYGON);
 		gl.glColor3f(125/255f,158/255f,240/255f);
@@ -204,7 +201,7 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glPushMatrix();
-		gl.glTranslatef(3.0f + Tx, 0.0f + Ty, -6.0f);
+		gl.glTranslatef(-4.8f + Tx, -2.0f + Ty, -6.0f);
 		gl.glRotatef(rcircle, 0.0f, 0.0f, 1.0f);
 		gl.glBegin(GL2.GL_POLYGON);
 		gl.glColor3f(125/255f,158/255f,240/255f);
