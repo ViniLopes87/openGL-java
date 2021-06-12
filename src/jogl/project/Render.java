@@ -14,7 +14,7 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.util.gl2.GLUT;
+//import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
@@ -215,6 +215,34 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glEnd();
 		gl.glPopMatrix();
 
+		//sun
+		int auxX = 0;
+		int auxY = 0;
+		int auxnumVertices = 30;
+		double auxradius = 0.65;
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+		gl.glLoadIdentity();
+		gl.glPushMatrix();
+		gl.glTranslatef(-9.3f + auxX, 5.0f + auxY, -6.0f);
+		gl.glRotatef(0, 0.0f, 0.0f, 1.0f);
+		gl.glBegin(GL2.GL_POLYGON);
+		gl.glColor3f(241/255f,208/255f,0/255f);
+		{
+			double angle = 0;
+			double angleIncrement = 2 * Math.PI / auxnumVertices;
+			for (int i = 0; i < auxnumVertices; i++) {
+				angle = i * angleIncrement;
+				double x = auxradius * Math.cos(angle);
+				double y = auxradius * Math.sin(angle);
+				gl.glVertex2d(x, y);
+
+			}
+		}
+		gl.glEnd();
+		gl.glPopMatrix();
+		
+		auxY -= .05f;
+		auxX += .1f;
 		rcircle -= 2.0f;
 		gl.glFlush();
 	}
