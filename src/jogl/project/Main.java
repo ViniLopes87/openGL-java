@@ -35,7 +35,6 @@ public class Main
         JFrame frame = new JFrame( "Projeto OpenGL" );
         // Liga o canvas com a janela
         frame.getContentPane().add( glcanvas);
-
         // Finaliza o programa quando a janela e fechada
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent ev) {
