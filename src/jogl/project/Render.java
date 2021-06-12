@@ -273,21 +273,24 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 
 		switch (key) {
 		case KeyEvent.VK_UP:
-			Ty++;
-
+			if(Ty < 0){
+				Ty++;
+			}
 			break;
 		case KeyEvent.VK_DOWN:
-			Ty--;
-
+			if(Ty > -3){
+				Ty--;
+			}
 			break;
-		case KeyEvent.VK_LEFT:
-			Tx--;
-
+		case KeyEvent.VK_LEFT:	
+			if(Tx > 0){
+				Tx--;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
-			Tx++;
-			;
-
+			if(Tx < 15){
+				Tx++;
+			}
 			break;
 		default:
 			break;
