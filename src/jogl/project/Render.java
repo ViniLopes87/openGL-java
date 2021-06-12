@@ -13,7 +13,6 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
-import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
@@ -26,35 +25,33 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	//Variables
 	float rquad = 0.0f;
 	float Tx = 0, Ty = 0;
+	float rcircle = 45.0f;
 	
 	private GLCanvas display;
 	private Timer animationTimer;
 	private boolean animating;
 	
-
 	public Renderer(GLCanvas display) {
 		this.display = display;
 
 		startAnimation();
 	}
 
-	float rcircle = 45.0f;
-	int refreshmill = 1;
-	
 	public void display(GLAutoDrawable gLDrawable) {
 		final GL2 gl = gLDrawable.getGL().getGL2();
      
 		// vertex parameters is x,y,z of display, respectively.
 		// Clear the window if a background color
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
-		
+		gl.glBindTexture(GL2.GL_TEXTURE_2D,texture);
+
 		//road
 		gl.glLoadIdentity();
 		gl.glTranslatef(0.0f, -5.0f, -6.0f);
 		gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
 		gl.glBegin(GL2.GL_QUADS); 						  // Draw A Quad
 	    gl.glColor3f(140/255.0f, 140/255.0f, 140/255.0f); // Color of road
-	    gl.glVertex3f(-31f, 4.0f, 0.0f); 				  // Top Left
+		gl.glVertex3f(-31f, 4.0f, 0.0f); 				  // Top Left
 	    gl.glVertex3f(31f, 4.0f, 0.0f); 				  // Top Right
 	    gl.glVertex3f(31f, -1.0f, 0.0f); 				  // Bottom Right
 	    gl.glVertex3f(-31f, -1.0f, 0.0f);				  // Bottom Left
@@ -174,7 +171,7 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glEnd(); // Done Drawing The Quad
 		
 		//circle1
-		int numVertices = 20;
+		int numVertices = 30;
 		double radius = 0.65;
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
@@ -213,13 +210,12 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 				double x = radius * Math.cos(angle);
 				double y = radius * Math.sin(angle);
 				gl.glVertex2d(x, y);
-
 			}
 		}
 		gl.glEnd();
 		gl.glPopMatrix();
-		
-		rcircle -= 0.3f;
+
+		rcircle -= 2.0f;
 		gl.glFlush();
 	}
 
@@ -227,12 +223,12 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		System.out.println("init() called");
 
 		GL2 gl = gLDrawable.getGL().getGL2();
-		gl.glClearColor(0.5f, 0.3f, 0.5f, 0.9f);
+		gl.glClearColor(132/255f, 208/255f, 250/255f, 98/255f);
 
 		FPSCounter.StartCounter();
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		try{
-		File im = new File("C:\\Users\\João Vitor\\Downloads\\openGL-java-master\\src\\jogl\\project\\data\\background.jpg");
+		File im = new File("C:\\Users\\Berg\\arthur\\opengl-gc\\src\\jogl\\project\\databackground.jpg");
 		Texture t = TextureIO.newTexture(im, true);	
 		texture = t.getTextureObject(gl);
 		}catch(IOException e) {
