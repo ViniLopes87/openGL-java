@@ -309,7 +309,8 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Right)
 		gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Right)
 		gl.glEnd(); // Done Drawing The Quad
-
+        
+		//cone
 		gl.glLoadIdentity();
    		// traslate the draw by z = -4.0
     	// Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
@@ -328,6 +329,61 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
     	// built-in (glut library) function , draw you a sphere.
     	glut.glutSolidCone(base,height,slices,stacks);
     	 // Flush buffers to screen
+    	
+    	//sphere
+    	gl.glLoadIdentity();
+    	
+    	gl.glTranslatef(5.0f,0.0f,-6.0f);
+    	
+    	gl.glColor3f(-51f,-51f,-51f);
+    	
+    	glut.glutWireSphere(1.0, 15, 15);	
+        
+    	//paralelepipedo
+    	gl.glLoadIdentity();
+    	
+    	gl.glTranslatef(-3.4f, -3.0f, -6.0f);
+    	
+    	gl.glBegin(GL2.GL_QUADS);
+    	
+    	gl.glColor3f(0.0f, 1.0f, 0.0f); // Set The Color To Green
+		gl.glVertex3f(1.0f, 1.0f, -5.0f); // Top Right Of The paralelepipedo (Top)
+		gl.glVertex3f(-1.0f, 1.0f, -5.0f); // Top Left Of The Quad paralelepipedo (Top)
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Bottom Left Of The paralelepipedo (Top)
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Bottom Right Of The paralelepipedo (Top)
+
+		gl.glColor3f(1.0f, 0.5f, 0.0f); // Set The Color To Orange
+		gl.glVertex3f(1.0f, -1.0f, -5.0f); // Top Right Of The  paralelepipedo(Bottom)
+		gl.glVertex3f(-1.0f, -1.0f, -5.0f); // Top Left Of The  paralelepipedo(Bottom)
+		gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The paralelepipedo (Bottom)
+		gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The  paralelepipedo(Bottom)
+
+		gl.glColor3f(1.0f, 0.0f, 0.0f); // Set The Color To Red
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Right Of The paralelepipedo (Front)
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Left Of The paralelepipedo (Front)
+		gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Left Of The paralelepipedo (Front)
+		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Right Of The paralelepipedo (Front)
+
+		gl.glColor3f(1.0f, 1.0f, 0.0f); // Set The Color To Yellow
+		gl.glVertex3f(1.0f, -1.0f, -5.0f); // Bottom Left Of The paralelepipedo (Back)
+		gl.glVertex3f(-1.0f, -1.0f, -5.0f); // Bottom Right Of The paralelepipedo (Back)
+		gl.glVertex3f(-1.0f, 1.0f, -5.0f); // Top Right Of The paralelepipedo (Back)
+		gl.glVertex3f(1.0f, 1.0f, -5.0f); // Top Left Of The paralelepipedo (Back)
+
+		gl.glColor3f(0.0f, 0.0f, 1.0f); // Set The Color To Blue
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Right Of The paralelepipedo (Left)
+		gl.glVertex3f(-1.0f, 1.0f, -5.0f); // Top Left Of The paralelepipedo (Left)
+		gl.glVertex3f(-1.0f, -1.0f, -5.0f); // Bottom Left Of The paralelepipedo (Left)
+		gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Right Of The paralelepipedo(Left)
+
+		gl.glColor3f(1.0f, 0.0f, 1.0f); // Set The Color To Violet
+		gl.glVertex3f(1.0f, 1.0f, -5.0f); // Top Right Of The paralelepipedo (Right)
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Left Of The paralelepipedo (Right)
+		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The paralelepipedo (Right)
+		gl.glVertex3f(1.0f, -1.0f, -5.0f); // Bottom Right Of The paralelepipedo (Right)
+    	
+    	gl.glEnd();
+    	
 		}
 	}
 	public void init(GLAutoDrawable gLDrawable) {
