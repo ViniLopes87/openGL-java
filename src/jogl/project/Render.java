@@ -24,11 +24,17 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 	private int texture;
 	//Variables
 	float rquad = 0.0f;
+	float rcone = 0.0f;
+	float maxCone = 0.0f;
 	float Tx = 0, Ty = 0;
 	float rcircle = 45.0f;
 	float xRotated = 0.01f;
 	float yRotated = 0.01f;
 	float zRotated = 0.01f;
+	double base=1;
+	double height=1.5;
+	int slices =25;
+	int stacks =25;
 	
 	private GLCanvas display;
 	private Timer animationTimer;
@@ -249,120 +255,80 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 		auxY -= .05f;
 		auxX += .1f;
 		rcircle -= 2.0f;
-		rquad -=0.2f;
+		rcone += 0.2f;
 		gl.glFlush();
+		xRotated += + 0.1;
+		yRotated += 0.1;
+    	zRotated += 0.1; 
 
 
 		if(Tx == 15){
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
-		//road
-		gl.glLoadIdentity();
-		gl.glTranslatef(0.0f, -5.0f, -6.0f);
-		gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-		gl.glBegin(GL2.GL_QUADS); 						  // Draw A Quad
-	    gl.glColor3f(140/255.0f, 140/255.0f, 140/255.0f); // Color of road
-		gl.glVertex3f(-31f, 4.0f, 0.0f); 				  // Top Left
-	    gl.glVertex3f(31f, 4.0f, 0.0f); 				  // Top Right
-	    gl.glVertex3f(31f, -1.0f, 0.0f); 				  // Bottom Right
-	    gl.glVertex3f(-31f, -1.0f, 0.0f);				  // Bottom Left
-	    gl.glEnd(); // Done Drawing The Quad
-        
-	    //tracks
-	    //track1
-	    gl.glLoadIdentity();
-	    gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-	    gl.glTranslatef(-8.5f, -3.5f, -6.0f);
-	    gl.glBegin(GL2.GL_QUADS); // Draw A Quad
-	  	gl.glColor3f(51.0f, 51.0f, 51.0f); // White Color of faixa.
-	  	gl.glVertex3f(-2.0f, 0.15f, 0.0f); // Top Left
-	  	gl.glVertex3f(2.0f, 0.15f, 0.0f); // Top Right
-	  	gl.glVertex3f(2.0f, -0.20f, 0.0f); // Bottom Right
-	  	gl.glVertex3f(-2.0f, -0.20f, 0.0f); // Bottom Left
-	  	gl.glEnd(); // Done Drawing The Quad
-	  	
-	  	//track2
-	  	gl.glLoadIdentity();
-	    gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-	    gl.glTranslatef(-2.5f, -3.5f, -6.0f);
-	    gl.glBegin(GL2.GL_QUADS); // Draw A Quad
-	  	gl.glColor3f(51.0f, 51.0f, 51.0f); // White Color of faixa.
-	  	gl.glVertex3f(-2.0f, 0.15f, 0.0f); // Top Left
-	  	gl.glVertex3f(2.0f, 0.15f, 0.0f); // Top Right
-	  	gl.glVertex3f(2.0f, -0.20f, 0.0f); // Bottom Right
-	  	gl.glVertex3f(-2.0f, -0.20f, 0.0f); // Bottom Left
-	  	gl.glEnd(); // Done Drawing The Quad
-	  	
-	  	//track3
-	  	gl.glLoadIdentity();
-	    gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-	    gl.glTranslatef(3.5f, -3.5f, -6.0f);
-	    gl.glBegin(GL2.GL_QUADS); // Draw A Quad
-	  	gl.glColor3f(51.0f, 51.0f, 51.0f); // White Color of faixa.
-	  	gl.glVertex3f(-2.0f, 0.15f, 0.0f); // Top Left
-	  	gl.glVertex3f(2.0f, 0.15f, 0.0f); // Top Right
-	  	gl.glVertex3f(2.0f, -0.20f, 0.0f); // Bottom Right
-	  	gl.glVertex3f(-2.0f, -0.20f, 0.0f); // Bottom Left
-	  	gl.glEnd(); // Done Drawing The Quad
-	  	
-	    //track4
-	  	gl.glLoadIdentity();
-	    gl.glRotatef(0, 0.0f, 1.0f, 0.0f);
-	    gl.glTranslatef(9.5f, -3.5f, -6.0f);
-	    gl.glBegin(GL2.GL_QUADS); // Draw A Quad
-	  	gl.glColor3f(51.0f, 51.0f, 51.0f); // White Color of faixa.
-	  	gl.glVertex3f(-2.0f, 0.15f, 0.0f); // Top Left
-	  	gl.glVertex3f(2.0f, 0.15f, 0.0f); // Top Right
-	  	gl.glVertex3f(2.0f, -0.20f, 0.0f); // Bottom Right
-	  	gl.glVertex3f(-2.0f, -0.20f, 0.0f); // Bottom Left
-	  	gl.glEnd(); // Done Drawing The Quad
 
 		//cube
-		  gl.glLoadIdentity();
-		  gl.glTranslatef(-4.4f, 0.75f, -6.0f); // Move Right And Into The Screen
+		gl.glLoadIdentity();
+		gl.glTranslatef(-4.4f, 0.75f, -6.0f); // Move Right And Into The Screen
 
-		  gl.glRotatef(0, 1.0f, 0.0f, 0.0f); // Rotate The Cube On X, Y & Z
+		gl.glRotatef(rquad,0.0f, 1.0f, 1.0f); // Rotate The Cube On X, Y & Z
+		  
+		gl.glBegin(GL2.GL_QUADS); // Start Drawing The Cube
 
-		  gl.glBegin(GL2.GL_QUADS); // Start Drawing The Cube
+		gl.glColor3f(0.0f, 1.0f, 0.0f); // Set The Color To Green
+		gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Top)
+		gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Top)
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Bottom Left Of The Quad (Top)
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Bottom Right Of The Quad (Top)
 
-		  gl.glColor3f(0.0f, 1.0f, 0.0f); // Set The Color To Green
-		  gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Top)
-		  gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Top)
-		  gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Bottom Left Of The Quad (Top)
-		  gl.glVertex3f(1.0f, 1.0f, 1.0f); // Bottom Right Of The Quad (Top)
+		gl.glColor3f(1.0f, 0.5f, 0.0f); // Set The Color To Orange
+		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Top Right Of The Quad (Bottom)
+		gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Top Left Of The Quad (Bottom)
+		gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Bottom)
+		gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Bottom)
 
-		  gl.glColor3f(1.0f, 0.5f, 0.0f); // Set The Color To Orange
-		  gl.glVertex3f(1.0f, -1.0f, 1.0f); // Top Right Of The Quad (Bottom)
-		  gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Top Left Of The Quad (Bottom)
-		  gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Bottom)
-		  gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Bottom)
+		gl.glColor3f(1.0f, 0.0f, 0.0f); // Set The Color To Red
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Front)
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Front)
+		gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Front)
+		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Front)
 
-		  gl.glColor3f(1.0f, 0.0f, 0.0f); // Set The Color To Red
-		  gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Front)
-		  gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Front)
-		  gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Front)
-		  gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Front)
+		gl.glColor3f(1.0f, 1.0f, 0.0f); // Set The Color To Yellow
+		gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Back)
+		gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Back)
+		gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Back)
+		gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Back)
 
-		  gl.glColor3f(1.0f, 1.0f, 0.0f); // Set The Color To Yellow
-		  gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Back)
-		  gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Back)
-		  gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Back)
-		  gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Back)
+		gl.glColor3f(0.0f, 0.0f, 1.0f); // Set The Color To Blue
+		gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Left)
+		gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Left)
+		gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Left)
+		gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Left)
 
-		  gl.glColor3f(0.0f, 0.0f, 1.0f); // Set The Color To Blue
-		  gl.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Left)
-		  gl.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Left)
-		  gl.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Left)
-		  gl.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Left)
+		gl.glColor3f(1.0f, 0.0f, 1.0f); // Set The Color To Violet
+		gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Right)
+		gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Right)
+		gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Right)
+		gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Right)
+		gl.glEnd(); // Done Drawing The Quad
 
-		  gl.glColor3f(1.0f, 0.0f, 1.0f); // Set The Color To Violet
-		  gl.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Right)
-		  gl.glVertex3f(1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Right)
-		  gl.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Right)
-		  gl.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Right)
-		  gl.glEnd(); // Done Drawing The Quad  
-
+		gl.glLoadIdentity();
+   		// traslate the draw by z = -4.0
+    	// Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
+    	gl.glTranslatef(0.0f,0.0f,-6.0f);
+    	// Red color used to draw.
+    	gl.glColor3f(0.9f, 0.3f, 0.2f); 
+    	// changing in transformation matrix.
+    	// rotation about X axis
+    	gl.glRotatef(xRotated,1.0f,0.0f,0.0f);
+    	// rotation about Y axis
+    	gl.glRotatef(yRotated,0.0f,1.0f,0.0f);
+   		// rotation about Z axis
+   		gl.glRotatef(zRotated,0.0f,0.0f,1.0f);
+    	// scaling transfomation 
+    	gl.glScalef(1.0f+maxCone,1.0f+maxCone,1.0f+maxCone);
+    	// built-in (glut library) function , draw you a sphere.
+    	glut.glutSolidCone(base,height,slices,stacks);
+    	 // Flush buffers to screen
 		}
-
 	}
 	public void init(GLAutoDrawable gLDrawable) {
 		System.out.println("init() called");
@@ -436,9 +402,19 @@ class Renderer implements GLEventListener, KeyListener, ActionListener {
 				}
 			}
 			break;
+		case KeyEvent.VK_R:
+			rquad -=0.2f;
+		break;
+		case KeyEvent.VK_A:
+			maxCone += 0.02f;
+		break;
+		case KeyEvent.VK_D:
+			maxCone -= 0.02f;
+		break;
 		default:
 			break;
 		}
+
 	}
 
 	@Override
